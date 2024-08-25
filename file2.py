@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
 import sqlite3
-import hashlib
+import bcrypt
+import os
 import re
 
 app = Flask(__name__)
+app.config['DATABASE'] = os.getenv('DATABASE_URL', 'users.db')
 
 def validate_input(username, password):
     if not re.match("^[a-zA-Z0-9_]+$", username):
@@ -20,13 +22,13 @@ def add_user():
     if not validate_input(username, password):
         return jsonify({'message': 'Invalid input'}), 400
     
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
-    conn.commit()
-    conn.close()
+    with sqlite3.connect(app.config['DATABASE']) as conn:
+        cursor = conn.cursor()
+        cursor.execute("CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT)")
+        cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+        conn.commit()
     
     return jsonify({'message': 'User added successfully'})
 
