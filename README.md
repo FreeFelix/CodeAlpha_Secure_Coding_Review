@@ -30,6 +30,8 @@ Here’s the improved version of the code with the recommended security practice
 Tools for Secure Code Review
 
 Static Code Analyzers: I chose to use Tool like Bandit for Python can help me to identify security issues in our code and also I used pytest mode to write test files for security and vulnerabilities.
+
+
 Manual Code Review: My regularly code manually to catch issues that automated tools might miss also will help to updates test file in order identify some hidens vulnerabilities and code loopholes.
 I would like to dive deeper into any specific aspect of secure coding or need help with another language or application?
 
