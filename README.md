@@ -32,3 +32,14 @@ Tools for Secure Code Review
 Static Code Analyzers: Tools like Bandit for Python can help identify security issues in your code.
 Manual Code Review: Regularly review your code manually to catch issues that automated tools might miss.
 Would you like to dive deeper into any specific aspect of secure coding or need help with another language or application?
+
+### Security Improvements
+Use Parameterized Queries: Your current code uses parameterized queries (?) for SQL commands, which helps prevent SQL injection. This is good practice.
+
+Hashing Passwords: Consider using a more secure hashing function specifically designed for password storage, such as bcrypt. This will help guard against brute-force attacks better than SHA-256.
+
+Use Environment Variables: Avoid hardcoding sensitive information (like database paths) directly in your code. Use environment variables for configuration.
+
+Database Connection Context: Use context managers for handling database connections to ensure they are properly closed even if an error occurs.
+
+Input Validation and Sanitization: While you already validate input, consider using libraries designed for form validation and sanitation, such as WTForms.
